@@ -32,6 +32,6 @@ jobs:
           NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
           echo "::set-output name=ngrok_url::$NGROK_URL"
       - name: Output public IP address of ngrok tunnel
-        run: echo "Public IP address: ${{ steps.ngrok_tunnel.outputs.ngrok_url }}"
+        run: echo "Public IP address: ${{steps.ngrok_tunnel.outputs.ngrok_url}}"
       - name: loop
         run: sudo bash loop.sh
