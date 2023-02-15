@@ -1,0 +1,26 @@
+name: SSH server with ngrok
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openssh-server wget
+    - name: Configure SSH server
+      run: |
+        sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+        sudo service ssh restart
+    - name: Download and install ngrok
+      run: |
+        wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+        unzip ngrok-stable-linux-amd64.zip
+    - name: Authenticate with ngrok
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+      run: ./ngrok authtoken $NGROK_AUTH_TOKEN
+    - name: Create ngrok tunnel
+      run: ./ngrok tcp 22 --region=us
