@@ -38,6 +38,6 @@ jobs:
         run: |
           echo "Starting SSH loop..."
           while true; do
-            ssh -o StrictHostKeyChecking=no -R 80:localhost:22 ${{ steps.ngrok_tunnel.outputs.ngrok_url }}
+            ssh -o StrictHostKeyChecking=no -R 80:localhost:22 user@${{ steps.ngrok_tunnel.outputs.ngrok_url }}
             sleep 10
           done
