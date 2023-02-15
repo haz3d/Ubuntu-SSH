@@ -1,7 +1,8 @@
 name: SSH server with ngrok
 
 on:
-  - push
+  push:
+    branches: [main]
 
 jobs:
   build:
